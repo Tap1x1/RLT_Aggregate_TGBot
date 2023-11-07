@@ -1,16 +1,16 @@
-from datetime import datetime
-from database import Database
-from config import DATABASE_NAME, DATABASE_URI, COLLECTION_NAME, START_DATE, END_DATE, GROUP_TYPE
-
+import logging
+from aiogram import executor
+from config import BOT_TOKEN
+from telegram_bot import TelegramBot
 
 def main():
-    database = Database(DATABASE_NAME, COLLECTION_NAME, DATABASE_URI)
+    try:
+        tg_bot = TelegramBot(BOT_TOKEN)
 
-    start_date = datetime.fromisoformat(START_DATE)
-    end_date = datetime.fromisoformat(END_DATE)
+        tg_bot.run()
+    except Exception as ex:
+        logging.exception(ex)
 
-    result =  database.aggregate_data(start_date, end_date, GROUP_TYPE)
-    print(result)
 
 if __name__ == "__main__":
     main()
