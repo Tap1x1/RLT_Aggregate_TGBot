@@ -1,7 +1,7 @@
 import logging
 from aiogram import executor
 from config import BOT_TOKEN
-from telegram_bot import TelegramBot
+from tg_bot import TelegramBot
 
 def main():
     try:
