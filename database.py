@@ -36,3 +36,23 @@ class Database:
                 grouping['$group']['_id']['$dateToString']['format'] = "%Y-%m-01T00:00:00"
 
             return grouping
+        
+        pipeline = [
+            {
+                '$match': {
+                    'dt': {
+                        '$gte': start_date,
+                        '$lte': end_date
+                    }
+                }
+            },
+            get_grouping(group_type),
+            {'$sort': {'_id': 1}} 
+        ]
+
+        results = list(self._collection.aggregate(pipeline))
+
+        labels = [result["_id"] for result in results]
+        dataset = [result["sum"] for result in results]
+
+        return {"dataset": dataset, "labels": labels}
